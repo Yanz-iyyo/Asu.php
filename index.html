@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="UploadPro adalah Platform upload Files-files ke Repository Github, dan juga di lengkapi feature Extrak Zip, memudahkan user untuk MengUpload Project2 yang di buatnya.">
+    <meta name="keywords" content="upload file, github uploader, file manager, upload zip dan Extrak, uploadpro, cloud storage, github integration">
+    <meta name="author" content="Gxyenn">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Upload Pro - Upload File ke Github dengan Mudah">
+    <meta property="og:description" content="UploadPro memungkinkan Anda mengupload file ke repository Github dengan cepat dan efisien. Upload File Biasa & ZIP, Auto Extract ZIP, Cepat & Responsif">
+    <meta property="og:image" content="https://uploadpro.myhoasting.my.id/images/uploadproicon.png">
+    <meta property="og:url" content="https://uploadpro.myhoasting.my.id/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="UploadPro">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="UploadPro - Upload File ke Github dengan Mudah">
+    <meta name="twitter:description" content="Upload file ke Github repository dengan cepat. Auto Extract ZIP, Unlimited & Free">
+    <meta name="twitter:image" content="https://uploadpro.myhoasting.my.id/images/uploadproicon.png">
+    <meta name="twitter:creator" content="@Gxyenn">
+    
+    <!-- Additional Meta Tags -->
+    <meta name="theme-color" content="#FF6B6B">
+    <meta name="msapplication-TileColor" content="#FF6B6B">
+    
+    <link rel="canonical" href="index.html">
+    <title>UploadPro - Github Repository</title>
+
+    <link rel="icon" href="images/uploadproicon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/uploadproicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/uploadproicon.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Reset CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Variabel Warna Baru */
+        :root {
+            --primary: #FF6B6B;
+            --primary-dark: #EE5A52;
+            --primary-light: #FF8E8E;
+            --secondary: #4ECDC4;
+            --accent: #FFD166;
+            --dark: #1A1A2E;
+            --darker: #0F0F1E;
+            --light: #F7F7F7;
+            --gray: #6C757D;
+            --success: #06D6A0;
+            --gradient: linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 100%);
+            --gradient-dark: linear-gradient(135deg, #1A1A2E 0%, #16213E 100%);
+            --gradient-hero: linear-gradient(135deg, #1A1A2E 0%, #16213E 50%, #0F3460 100%);
+        }
+
+        /* Global Styles */
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        section {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 1.8rem;
+            position: relative;
+            font-weight: 700;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--gradient);
+            border-radius: 2px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: var(--gradient);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+            font-size: 0.9rem;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+            z-index: -1;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-large {
+            padding: 12px 25px;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #FF6B6B 0%, #FF8E8E 100%);
+            box-shadow: 0 4px 20px rgba(255, 107, 107, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        .btn-primary:hover {
+            animation: none;
+            box-shadow: 0 8px 30px rgba(255, 107, 107, 0.6);
+        }
+
+        /* Header Styles */
+        header {
+            background: rgba(26, 26, 46, 0.95);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 12px 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        header.scrolled {
+            padding: 10px 0;
+            background: rgba(26, 26, 46, 0.98);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--light);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo span {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo i {
+            margin-right: 6px;
+            font-size: 1.2rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 20px;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-light);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            z-index: 1001;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 24px;
+            height: 18px;
+        }
+
+        .hamburger-line {
+            width: 100%;
+            height: 2px;
+            background-color: var(--light);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active .hamburger-line:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+
+        .hamburger.active .hamburger-line:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active .hamburger-line:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+
+        /* Overlay Menu */
+        .overlay {
+            position: fixed;
+            top: 0;
+            right: -280px;
+            width: 260px;
+            height: 100%;
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(15px);
+            z-index: 999;
+            transition: right 0.4s ease;
+            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.2);
+            border-left: 1px solid rgba(255, 107, 107, 0.2);
+        }
+
+        .overlay.active {
+            right: 0;
+        }
+
+        .overlay-content {
+            padding: 70px 20px 20px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .close-btn:hover {
+            color: var(--primary);
+            background: rgba(255, 255, 255, 0.15);
+            transform: rotate(90deg);
+        }
+
+        .overlay-header {
+            margin-bottom: 25px;
+            text-align: center;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .overlay-header h3 {
+            font-size: 1.2rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+        }
+
+        .overlay-header p {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .overlay-links {
+            list-style: none;
+            flex-grow: 1;
+        }
+
+        .overlay-links li {
+            margin-bottom: 10px;
+        }
+
+        .overlay-links a {
+            display: flex;
+            align-items: center;
+            color: var(--light);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 10px 12px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .overlay-links a:hover {
+            background: rgba(255, 107, 107, 0.2);
+            border-color: rgba(255, 107, 107, 0.3);
+            transform: translateX(5px);
+        }
+
+        .overlay-links i {
+            margin-right: 10px;
+            font-size: 1rem;
+            width: 18px;
+            text-align: center;
+        }
+
+        .overlay-footer {
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .overlay-footer p {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 34px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .social-links a:hover {
+            background: var(--gradient);
+            transform: translateY(-3px) scale(1.1);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            background: var(--gradient-hero);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 107, 107, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(78, 205, 196, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255, 107, 107, 0.05) 0%, transparent 50%);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero-content {
+            max-width: 750px;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            line-height: 1.2;
+            font-weight: 800;
+        }
+
+        .hero p {
+            font-size: 1rem;
+            margin-bottom: 25px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .hero-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 25px;
+        }
+
+        .badge {
+            background: rgba(255, 107, 107, 0.2);
+            color: #FFB8B8;
+            padding: 6px 12px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .badge:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.2);
+            background: rgba(255, 107, 107, 0.3);
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--primary);
+            box-shadow: none;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 107, 107, 0.1);
+        }
+
+        /* Features Section */
+        .features {
+            background: var(--dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .features::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at 30% 30%, rgba(255, 107, 107, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 70% 70%, rgba(78, 205, 196, 0.05) 0%, transparent 50%);
+            animation: rotate 20s linear infinite;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 25px 20px;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 107, 107, 0.1), transparent);
+            transition: left 0.7s ease;
+        }
+
+        .feature-card:hover::before {
+            left: 100%;
+        }
+
+        .feature-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 107, 107, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.15);
+        }
+
+        .feature-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .feature-card p {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* How It Works Section */
+        .how-it-works {
+            background: var(--darker);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .how-it-works::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 10% 10%, rgba(255, 107, 107, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 90% 90%, rgba(78, 205, 196, 0.05) 0%, transparent 50%);
+        }
+
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-top: 35px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            padding: 0 12px;
+            margin-bottom: 25px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.5s ease;
+            position: relative;
+        }
+
+        .step::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            right: -25px;
+            width: 50px;
+            height: 2px;
+            background: var(--gradient);
+            opacity: 0.5;
+        }
+
+        .step:last-child::before {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .step::before {
+                display: none;
+            }
+        }
+
+        .step.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: var(--gradient);
+            color: white;
+            border-radius: 50%;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-number::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
+            background: var(--gradient);
+            border-radius: 50%;
+            z-index: -1;
+            opacity: 0.3;
+            animation: pulse 2s infinite;
+        }
+
+        .step:hover .step-number {
+            transform: scale(1.08) rotate(5deg);
+            box-shadow: 0 6px 18px rgba(255, 107, 107, 0.4);
+        }
+
+        .step h3 {
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .step p {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* CTA Section */
+        .cta {
+            background: var(--gradient);
+            text-align: center;
+            padding: 60px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+        }
+
+        .cta h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+            font-weight: 700;
+        }
+
+        .cta p {
+            max-width: 700px;
+            margin: 0 auto 25px;
+            font-size: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta .btn {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .cta .btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--darker);
+            padding: 50px 0 25px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 10% 10%, rgba(255, 107, 107, 0.05) 0%, transparent 50%);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 35px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 200px;
+            margin-bottom: 25px;
+        }
+
+        .footer-section h3 {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 600;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 8px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            position: relative;
+            padding-left: 0;
+            transition: padding-left 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-light);
+            padding-left: 8px;
+        }
+
+        .footer-links a::before {
+            content: '▸';
+            position: absolute;
+            left: -8px;
+            opacity: 0;
+            transition: opacity 0.3s ease, left 0.3s ease;
+        }
+
+        .footer-links a:hover::before {
+            opacity: 1;
+            left: 0;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.85rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 4px 20px rgba(255, 107, 107, 0.4);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 4px 30px rgba(255, 107, 107, 0.6);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 4px 20px rgba(255, 107, 107, 0.4);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes typewriter {
+            from {
+                width: 0;
+            }
+            to {
+                width: 100%;
+            }
+        }
+
+        @keyframes blink {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0;
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        .float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Highlight Text */
+        .highlight {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+
+        /* Security Badge */
+        .security-badge {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(6, 214, 160, 0.2);
+            color: #6EE7B7;
+            padding: 6px 12px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            border: 1px solid rgba(6, 214, 160, 0.3);
+            margin-top: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .security-badge:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(6, 214, 160, 0.2);
+            background: rgba(6, 214, 160, 0.3);
+        }
+
+        .security-badge i {
+            margin-right: 5px;
+        }
+
+        /* Particle Background */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            animation: float 6s infinite ease-in-out;
+        }
+
+        /* Typewriter Effect */
+        .typewriter {
+            overflow: hidden;
+            border-right: 2px solid var(--primary);
+            white-space: nowrap;
+            margin: 0 auto;
+            animation: typewriter 3.5s steps(40, end), blink 0.75s step-end infinite;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .hamburger {
+                display: flex;
+            }
+
+            .hero-btns {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+                margin-bottom: 10px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.6rem;
+            }
+            
+            section {
+                padding: 50px 0;
+            }
+            
+            .overlay {
+                width: 240px;
+            }
+
+            .hero p {
+                font-size: 0.95rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .step {
+                min-width: 100%;
+            }
+
+            .footer-content {
+                flex-direction: column;
+            }
+
+            .footer-section {
+                min-width: 100%;
+            }
+            
+            .hero-btns {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 1.6rem;
+            }
+            
+            .section-title {
+                font-size: 1.4rem;
+            }
+            
+            .hero-badges {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .badge {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .container {
+                padding: 0 10px;
+            }
+            
+            .step {
+                padding: 0 5px;
+            }
+            
+            .feature-card {
+                padding: 20px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Particle Background -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html#" class="logo"><i class="fas fa-cloud-upload-alt"></i>Upload<span>Pro</span></a>
+                <ul class="nav-links">
+                    <li><a href="index.html#features">Fitur</a></li>
+                    <li><a href="index.html#how-it-works">Cara Kerja</a></li>
+                    <li><a href="ldu.html" class="btn btn-primary"><i class="fas fa-rocket"></i> Start</a></li>
+                </ul>
+                <div class="hamburger" id="hamburger">
+                    <div class="hamburger-line"></div>
+                    <div class="hamburger-line"></div>
+                    <div class="hamburger-line"></div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Overlay Menu -->
+    <div class="overlay" id="overlay">
+        <button class="close-btn" id="close-btn">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="overlay-content">
+            <div class="overlay-header">
+                <h3>Upload Github Pro</h3>
+                <p>By Gxyenn</p>
+            </div>
+            <ul class="overlay-links">
+                <li><a href="ldu.html"><i class="fas fa-rocket"></i> Start Now</a></li>
+                <li><a href="https://saweria.co/Gxyenn" target="_blank"><i class="fas fa-heart"></i> Donasi</a></li>
+                <li><a href="index.html#features"><i class="fas fa-star"></i> Fitur</a></li>
+                <li><a href="index.html#how-it-works"><i class="fas fa-cogs"></i> Cara Kerja</a></li>
+            </ul>
+            <div class="overlay-footer">
+                <p>Terhubung dengan kami</p>
+                <div class="social-links">
+                    <a href="https://github.com/Gxyenn"><i class="fab fa-github"></i></a>
+                    <a href="https://t.me/GxyennOfficial"><i class="fab fa-telegram"></i></a>
+                    <a href="https://whatsapp.com/channel/0029VbBWwFV11ulOg1TloC3d"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="fade-in">Upload File ke Github dengan <span class="highlight typewriter">Mudah</span></h1>
+                <p class="fade-in">UploadPro memungkinkan Anda mengupload file ke repository Github dengan cepat dan efisien. Dikelola oleh <strong>Gxyenn</strong>.</p>
+                
+                <div class="hero-badges fade-in">
+                    <div class="badge">Upload File Biasa & ZIP</div>
+                    <div class="badge">Auto Extract ZIP</div>
+                    <div class="badge">Cepat & Responsif</div>
+                    <div class="badge">Mudah Dipahami</div>
+                    <div class="badge">Free Unlimited</div>
+                    <div class="security-badge"><i class="fas fa-shield-alt"></i> Aman 100%</div>
+                </div>
+                
+                <div class="hero-btns fade-in">
+                    <a href="ldu.html" class="btn btn-large btn-primary"><i class="fas fa-play-circle"></i> Start Now</a>
+                    <a href="index.html#features" class="btn btn-secondary btn-large"><i class="fas fa-info-circle"></i> Pelajari Fitur</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">Kelebihan UploadPro</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-file-upload"></i>
+                    </div>
+                    <h3>Upload File Biasa</h3>
+                    <p>Upload berbagai jenis file biasa (images, documents, code files) langsung ke repository Github dengan mudah.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-file-archive"></i>
+                    </div>
+                    <h3>Auto Extract ZIP</h3>
+                    <p>Upload file ZIP dan secara otomatis mengekstrak isinya ke repository Github. Fitur ini muncul khusus untuk file ZIP!</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Cepat & Efisien</h3>
+                    <p>Proses upload yang sangat cepat dengan teknologi terbaru. Upload file besar dalam hitungan detik.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Responsif di Semua Perangkat</h3>
+                    <p>Akses dari mana saja dengan antarmuka yang responsif, baik di desktop, tablet, maupun smartphone.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Mudah Dipahami</h3>
+                    <p>Antarmuka yang intuitif dan mudah digunakan, bahkan untuk pemula sekalipun. Tidak perlu belajar lama!</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Aman 100%</h3>
+                    <p>File Anda dijamin keamanannya dengan enkripsi end-to-end. Data pribadi tetap terlindungi sepenuhnya.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">Cara Menggunakan</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Login dengan Github</h3>
+                    <p>Klik tombol <span class="highlight">Start</span> dan masuk menggunakan akun Github Anda.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Pilih Repository</h3>
+                    <p>Pilih repository tujuan untuk mengupload file atau buat repository baru.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Upload File</h3>
+                    <p>Upload file biasa atau ZIP. Fitur Auto Extract akan muncul otomatis untuk file ZIP.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Selesai!</h3>
+                    <p>File Anda akan langsung tersedia di repository Github. Cepat dan mudah!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Siap Mengupload File ke Github?</h2>
+            <p>Bergabunglah dengan ribuan pengguna yang telah merasakan kemudahan upload file dengan UploadPro. <span class="highlight">Gratis selamanya!</span></p>
+            <a href="ldu.html" class="btn btn-large btn-primary"><i class="fas fa-rocket"></i> Start Now - Free Forever</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>UploadPro</h3>
+                    <p>Solusi terbaik untuk upload file ke repository Github dengan cepat dan mudah. Dikembangkan oleh <span class="highlight">Gxyenn</span>.</p>
+                    <div class="social-links">
+                        <a href="https://github.com/Gxyenn"><i class="fab fa-github"></i></a>
+                        <a href="https://t.me/GxyennOfficial"><i class="fab fa-telegram"></i></a>
+                        <a href="https://whatsapp.com/channel/0029VbBWwFV11ulOg1TloC3d"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html#features">Fitur</a></li>
+                        <li><a href="index.html#how-it-works">Cara Kerja</a></li>
+                        <li><a href="index.html#">Blog</a></li>
+                        <li><a href="index.html#">Kontak</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Dukungan</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html#">Bantuan</a></li>
+                        <li><a href="index.html#">FAQ</a></li>
+                        <li><a href="index.html#">Privacy Policy</a></li>
+                        <li><a href="index.html#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Dukung Developer</h3>
+                    <p>Jika Anda merasa terbantu dengan aplikasi ini, pertimbangkan untuk memberikan dukungan kepada developer.</p>
+                    <a href="https://saweria.co/Gxyenn" class="btn" target="_blank"><i class="fas fa-heart"></i> Donasi Sekarang</a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 UploadPro. Dibuat dengan ❤️ oleh <strong>Gxyenn</strong></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll Animation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Header scroll effect
+            const header = document.getElementById('header');
+            
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+
+            // Scroll animation for elements
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            // Observe feature cards
+            document.querySelectorAll('.feature-card').forEach(card => {
+                observer.observe(card);
+            });
+
+            // Observe steps
+            document.querySelectorAll('.step').forEach(step => {
+                observer.observe(step);
+            });
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 70,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Hamburger Menu Functionality
+            const hamburger = document.getElementById('hamburger');
+            const overlay = document.getElementById('overlay');
+            const closeBtn = document.getElementById('close-btn');
+
+            hamburger.addEventListener('click', function() {
+                overlay.classList.add('active');
+                hamburger.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+
+            closeBtn.addEventListener('click', function() {
+                overlay.classList.remove('active');
+                hamburger.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+
+            // Close overlay when clicking on a link
+            document.querySelectorAll('.overlay-links a').forEach(link => {
+                link.addEventListener('click', function() {
+                    overlay.classList.remove('active');
+                    hamburger.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                });
+            });
+
+            // Close overlay when clicking outside
+            document.addEventListener('click', function(e) {
+                if (overlay.classList.contains('active') && 
+                    !overlay.contains(e.target) && 
+                    !hamburger.contains(e.target)) {
+                    overlay.classList.remove('active');
+                    hamburger.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+
+            // Create particles background
+            function createParticles() {
+                const particlesContainer = document.getElementById('particles');
+                const particleCount = 20;
+                
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement('div');
+                    particle.classList.add('particle');
+                    
+                    // Random size, position, and animation delay
+                    const size = Math.random() * 6 + 2;
+                    const posX = Math.random() * 100;
+                    const posY = Math.random() * 100;
+                    const delay = Math.random() * 5;
+                    const duration = Math.random() * 4 + 4;
+                    
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    particle.style.left = `${posX}%`;
+                    particle.style.top = `${posY}%`;
+                    particle.style.animationDelay = `${delay}s`;
+                    particle.style.animationDuration = `${duration}s`;
+                    particle.style.background = `rgba(255, 107, 107, ${Math.random() * 0.3 + 0.1})`;
+                    
+                    particlesContainer.appendChild(particle);
+                }
+            }
+            
+            createParticles();
+        });
+    </script>
+</body>
+</html>
